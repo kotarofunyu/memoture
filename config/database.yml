@@ -48,7 +48,10 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: memoture_production
-  username: memoture
-  password: <%= ENV['MEMOTURE_DATABASE_PASSWORD'] %>
+  # <<: *default
+  # database: memoture_production
+  # username: memoture
+  # password: <%= ENV['MEMOTURE_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
