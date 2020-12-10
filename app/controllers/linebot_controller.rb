@@ -29,7 +29,7 @@ class LinebotController < ApplicationController
             )
             message = {
               type: 'text',
-              text: "メモを作成しました！:#{event.message['text']}"
+              text: "メモを作成しました！\n#{event.message['text']}"
             }
           end
           # Memo.create!(
