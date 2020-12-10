@@ -2,7 +2,6 @@ class LinebotController < ApplicationController
   require 'line/bot'
 
   def callback
-    # binding.pry
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
@@ -17,17 +16,17 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
           first_line = text.split("\n")[0]
-          if text.include?("\n") && first_line.include?("検索")
+          if text.include?("\n") && first_line.include?('検索')
             # search
             message = {
               type: 'text',
               text: search(text.split("\n")[1])
             }
-          elsif first_line.include?("一覧")
+          elsif first_line.include?('一覧')
             # index
             message = { type: 'text', text: index }
           else
-            # create(text)
+            # create
             message = { type: 'text', text: "メモしました\n#{create(text)}" }
           end
         end
@@ -40,7 +39,6 @@ class LinebotController < ApplicationController
 
   private
 
-# LINE Developers登録完了後に作成される環境変数の認証
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
@@ -59,10 +57,7 @@ class LinebotController < ApplicationController
   end
 
   def search(query)
-    # @memos = Memo.where('text like?', '%http%')
     result = Memo.pluck('text').select { |text| text.include?(query) }
-    memos = result.join("\n")
-    return memos
-    # @memos = Memo.where('text like?', "%#{query}%"
+    return memos = result.join("\n")
   end
 end
