@@ -74,7 +74,7 @@ class LinebotController < ApplicationController
   def search
     # @memos = Memo.where('text like?', '%http%')
     memos = Memo.pluck("text").select { |text| text.include?('http') }
-    return memos[0]
+    return memos
     # @memos = Memo.where('text like?', "%#{query}%"
   end
 end
