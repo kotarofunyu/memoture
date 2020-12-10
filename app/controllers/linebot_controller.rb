@@ -16,7 +16,7 @@ class LinebotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
-          if text.include?('\n')
+          if text.include?("\n")
             message = {
               type: 'text',
               text: "改行しましたね。"
