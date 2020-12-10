@@ -15,30 +15,30 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          int_regexp = /^[0-9]+$/
-          if event.message['text'].match?(int_regexp)
-            id = event.message['text'].to_i
-            memo = Memo.find_by(id: id)
+          text = event.message['text']
+          if text.include?('\n')
             message = {
               type: 'text',
-              text: "メモを見つけました！: #{memo.text}"
-            }
-          else
-            Memo.create!(
-              text: event.message['text']
-            )
-            message = {
-              type: 'text',
-              text: "メモを作成しました！\n#{event.message['text']}"
+              text: "改行しましたね。"
             }
           end
-          # Memo.create!(
-          #   text: event.message['text']
-          # )
-          # message = {
-          #   type: 'text',
-          #   text: "メモを作成しました！:#{event.message['text']}"
-          # }
+          # int_regexp = /^[0-9]+$/
+          # if event.message['text'].match?(int_regexp)
+          #   id = event.message['text'].to_i
+          #   memo = Memo.find_by(id: id)
+          #   message = {
+          #     type: 'text',
+          #     text: "メモを見つけました！: #{memo.text}"
+          #   }
+          # else
+          #   Memo.create!(
+          #     text: event.message['text']
+          #   )
+          #   message = {
+          #     type: 'text',
+          #     text: "メモを作成しました！\n#{event.message['text']}"
+          #   }
+          # end
         end
       end
       client.reply_message(event['replyToken'], message)
@@ -46,7 +46,7 @@ class LinebotController < ApplicationController
     head :ok
   end
 
-private
+  private
 
 # LINE Developers登録完了後に作成される環境変数の認証
   def client
@@ -54,5 +54,18 @@ private
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
+  end
+
+  def create
+    @memo = Memo.create(text: text)
+  end
+
+  def index
+    @memos = Memo.all
+  end
+
+  def search
+    @memos = Memo.where('text like?', '%http%')
+    # @memos = Memo.where('text like?', "%#{query}%"
   end
 end
