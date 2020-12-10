@@ -66,7 +66,11 @@ class LinebotController < ApplicationController
   end
 
   def twitter_save(text)
-    tweet_id = text.split('/').grep(/^[0-9]+$/)[0].to_i
+    if unformatted.includes?("?")
+      tweet_id = text.split('?')[0].split('/').grep(/^[0-9]+$/)[0].to_i
+    else
+      tweet_id = text.split('/').grep(/^[0-9]+$/)[0].to_i
+    end
     return tweet_content = Tweet.get_tweet_full_text(tweet_id)
   end
 end
