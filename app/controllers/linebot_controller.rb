@@ -20,7 +20,7 @@ class LinebotController < ApplicationController
           )
           message = {
             type: 'text',
-            text: "メモを作成しました！:#{event.message['text']}
+            text: "メモを作成しました！:#{event.message['text']}"
           }
         end
       end
