@@ -1,24 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Abstract
+CREATE and READ memos through LINE app.
+## Diagram
+![memoture_diagram](https://user-images.githubusercontent.com/58697518/101764086-fdec9800-3b22-11eb-9b8b-38fdf1fe77bc.png)
