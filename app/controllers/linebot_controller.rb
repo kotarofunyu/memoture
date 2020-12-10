@@ -15,13 +15,30 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          Memo.create!(
-            text: event.message['text']
-          )
-          message = {
-            type: 'text',
-            text: "メモを作成しました！:#{event.message['text']}"
-          }
+          int_regexp = /^[0-9]+$/
+          if event.message['text'].match?(int_regexp)
+            id = event.message['text'].to_i
+            memo = Memo.find_by(id: id)
+            message = {
+              type: 'text',
+              text: "メモを見つけました！: #{memo.text}"
+            }
+          else
+            Memo.create!(
+              text: event.message['text']
+            )
+            message = {
+              type: 'text',
+              text: "メモを作成しました！:#{event.message['text']}"
+            }
+          end
+          # Memo.create!(
+          #   text: event.message['text']
+          # )
+          # message = {
+          #   type: 'text',
+          #   text: "メモを作成しました！:#{event.message['text']}"
+          # }
         end
       end
       client.reply_message(event['replyToken'], message)
