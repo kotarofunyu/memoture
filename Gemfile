@@ -17,7 +17,7 @@ gem 'puma', '~> 4.1'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rspec-rails'
 gem 'factory_bot_rails'
-
+gem 'line-bot-api'
 gem 'pry-rails'
 gem 'annotate'
 # Use Active Storage variant
