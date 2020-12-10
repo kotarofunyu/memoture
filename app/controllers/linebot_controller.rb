@@ -25,10 +25,10 @@ class LinebotController < ApplicationController
             }
           elsif first_line.include?("一覧")
             # index
-            message = {type: 'text', text: index}
+            message = { type: 'text', text: index }
           else
             # create(text)
-            message = {type: 'text', text: create(text)}
+            message = { type: 'text', text: "メモしました\n#{create(text)}" }
           end
         end
       end
