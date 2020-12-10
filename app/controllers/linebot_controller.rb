@@ -68,7 +68,8 @@ class LinebotController < ApplicationController
   end
 
   def index
-    @memos = Memo.all
+    result = Memo.all
+    return memos = result.join("\n")
   end
 
   def search(query)
