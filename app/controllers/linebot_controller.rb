@@ -17,28 +17,34 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
           if text.include?("\n")
+            first_line = text.split("\n")[0]
+            if first_line.include?("検索") || first_line.include?("一覧")
+              if first_line.include?("検索")
+                # search
+                message = {
+                  type: 'text',
+                  text: search
+                }
+              else
+                # index
+                message = {
+                  type: 'text',
+                  text: index
+                }
+              end
+            else
+              # create(text)
+              message = {
+                type: 'text',
+                text: create(text)
+              }
+            end
+          else
             message = {
               type: 'text',
-              text: "改行しましたね。"
+              text: create(text)
             }
           end
-          # int_regexp = /^[0-9]+$/
-          # if event.message['text'].match?(int_regexp)
-          #   id = event.message['text'].to_i
-          #   memo = Memo.find_by(id: id)
-          #   message = {
-          #     type: 'text',
-          #     text: "メモを見つけました！: #{memo.text}"
-          #   }
-          # else
-          #   Memo.create!(
-          #     text: event.message['text']
-          #   )
-          #   message = {
-          #     type: 'text',
-          #     text: "メモを作成しました！\n#{event.message['text']}"
-          #   }
-          # end
         end
       end
       client.reply_message(event['replyToken'], message)
@@ -56,7 +62,7 @@ class LinebotController < ApplicationController
     }
   end
 
-  def create
+  def create(text)
     @memo = Memo.create(text: text)
   end
 
