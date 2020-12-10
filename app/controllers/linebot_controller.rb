@@ -16,30 +16,20 @@ class LinebotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
-          if text.include?("\n")
-            first_line = text.split("\n")[0]
-            if first_line.include?("検索") || first_line.include?("一覧")
-              if first_line.include?("検索")
-                # search
-                message = {
-                  type: 'text',
-                  text: search(text.split("\n")[1])
-                }
-              else
-                # index
-                message = {
-                  type: 'text',
-                  text: index
-                }
-              end
-            else
-              # create(text)
+          first_line = text.split("\n")[0]
+          if text.include?("\n") && first_line.include_("検索")
+            # search
+            message = {
+              type: 'text',
+              text: search(text.split("\n")[1])
+            }
+          elsif first_line.include?("一覧")
               message = {
                 type: 'text',
-                text: create(text)
+                text: index
               }
-            end
           else
+            # create(text)
             message = {
               type: 'text',
               text: create(text)
@@ -64,7 +54,8 @@ class LinebotController < ApplicationController
   end
 
   def create(text)
-    @memo = Memo.create(text: text)
+    memo= Memo.create(text: text)
+    return memo.text
   end
 
   def index
