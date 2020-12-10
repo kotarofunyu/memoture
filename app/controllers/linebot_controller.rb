@@ -47,7 +47,11 @@ class LinebotController < ApplicationController
   end
 
   def create(text)
-    memo= Memo.create(text: text)
+    if text.include?("twitter.com")
+      memo = Memo.create(text: twitter_save(text))
+    else
+      memo = Memo.create(text: text)
+    end
     return memo.text
   end
 
@@ -59,5 +63,10 @@ class LinebotController < ApplicationController
   def search(query)
     result = Memo.pluck('text').select { |text| text.include?(query) }
     return memos = result.join("\n")
+  end
+
+  def twitter_save(text)
+    tweet_id = text.split('/').grep(/^[0-9]+$/)[0].to_i
+    return tweet_content = Tweet.get_tweet_full_text(tweet_id)
   end
 end

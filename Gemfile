@@ -20,6 +20,9 @@ gem 'factory_bot_rails'
 gem 'line-bot-api'
 gem 'pry-rails'
 gem 'annotate'
+gem 'mechanize'
+gem 'twitter'
+gem 'dotenv-rails'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
