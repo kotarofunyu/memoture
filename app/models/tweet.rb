@@ -37,21 +37,4 @@ class Tweet < ApplicationRecord
     return tweet
   end
 
-  # def self.get_tweet_full_text(tweet_id)
-  #   tweet = @client.status(tweet_id, options={tweet_mode: "extended"})
-  #   p tweet.user
-  #   p tweet.user.name
-  #   p tweet.user.screen_name
-  #   return tweet.text
-  # end
-
-  # def self.create_tweet(url, tweet_id)
-  #   tweet = @client.status(tweet_id, options={})
-  #   return Tweet.new(
-  #     url: url,
-  #     user_name: tweet.user.name,
-  #     user_screen_name: tweet.user_screen_name,
-  #     tweet_created_at: tweet.created_at
-  #   )
-  # end
 end

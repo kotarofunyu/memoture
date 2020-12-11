@@ -49,7 +49,11 @@ class LinebotController < ApplicationController
     if text.include?("twitter.com")
       tweet = Tweet.get_tweet_object(text)
       memo = Memo.new(text: tweet.text)
-      memo.tweet = Tweet.new(url: text, user_name: tweet.user.name, user_screen_name: tweet.user.screen_name )
+      memo.tweet = Tweet.new(
+        url: text,
+        user_name: tweet.user.name,
+        user_screen_name: tweet.user.screen_name
+      )
       memo.save!
     else
       memo = Memo.create(text: text)
