@@ -27,7 +27,7 @@ class LinebotController < ApplicationController
             message = { type: 'text', text: index }
           else
             # create
-            message = { type: 'text', text: "メモしました\n#{create(text)}" }
+            message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
           end
         end
       end
@@ -62,7 +62,8 @@ class LinebotController < ApplicationController
 
   def search(query)
     result = Memo.pluck('text').select { |text| text.include?(query) }
-    return memos = result.join("\n")
+    result.blank? ? memos = '該当するmemoがありませんでした。' : memos = result.join("\n\n")
+    return memos
   end
 
   def twitter_save(text)
