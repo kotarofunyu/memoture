@@ -1,5 +1,9 @@
 class LinebotController < ApplicationController
   require 'line/bot'
+  @client = Line::Bot::Client.new do |config|
+    config.channel_access_token = ENV["LINE_CHANNEL_ACCESS_TOKEN"]
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+  end
 
   def callback
     body = request.body.read
@@ -39,12 +43,12 @@ class LinebotController < ApplicationController
 
   private
 
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
+  # def client
+  #   @client ||= Line::Bot::Client.new { |config|
+  #     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+  #     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+  #   }
+  # end
 
   def create(text)
     if text.include?("twitter.com")
