@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #
 class Memo < ApplicationRecord
+  has_one :tweet, dependent: :destroy
   validates :text, presence: true
   enum from: { twitter: 0 }
 end
