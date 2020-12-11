@@ -12,7 +12,6 @@ class Scraping < ApplicationRecord
     agent = Mechanize.new
     page = agent.get("")
     elements = page.search('article[]')
-    binding.pry
     elements.each do |element|
       memo = Memo.new
       memo.text = element.inner_text
