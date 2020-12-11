@@ -62,7 +62,7 @@ class LinebotController < ApplicationController
 
   def search(query)
     result = Memo.pluck('text').select { |text| text.include?(query) }
-    section_line = '---------------'
+    section_line = '------------------------------'
     result.blank? ? memos = '該当するmemoがありませんでした。' : memos = result.join("\n#{section_line}\n")
     return memos
   end
