@@ -9,6 +9,8 @@ CREATE and READ memos through LINE app.
 
 ### 保存
 
+ツイートのURLを投稿します。
+
 ### 参照
 
 #### 検索
