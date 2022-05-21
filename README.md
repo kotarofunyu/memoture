@@ -1,20 +1,37 @@
 # README
 
-## Abstract
+## 概要
 CREATE and READ memos through LINE app.
-## Usage
-### For Developers
-1. Sign up LINE Developers.
-2. Create a new channel.
-3. Get environmental variables, which are "channel secret" and "access token".
-4. Set those in your environment.
-### For Users
-1. Add friends memoture in your LINE account.
-2. Send "text" if you want to create memo.
-3. Send "一覧" if you want to get index of your memos.
-4. Type "検索 (start new line) query_words" and send them if you want to get memos you want to see.
-### Twitter memo
-if you send tweet url, Rails detect it and get tweet's full_text through Twitter API.
-And then, Rails will save tweet's full_text instead of saving tweet url user sent.
-## Diagram
+メモしておきたいツイートを保存できるアプリです。
+ツイートのURLをmemotureのLINEbotのトークに投稿するだけでメモできます。
+
+## 使い方
+
+### 保存
+
+### 参照
+
+#### 検索
+
+一行目に検索という文字列を入力、
+二行目に検索したい文字列を入力して投稿します。
+
+指定された文字列を含むツイートの一覧が返ります。
+
+以下を投稿すると、「オブジェクト指向」を含むツイートの一覧が返ります。
+
+```text
+検索
+オブジェクト指向
+```
+
+#### 一覧
+
+一覧という文字列を入力して投稿します。
+全件が返ります。
+
+## 仕組み
+
+ツイートのURLを送ると、Railsアプリケーション内部で Twitter APIを叩いてツイートの内容を取得して DBに保存します。
+
 ![memoture_diagram](https://user-images.githubusercontent.com/58697518/101764086-fdec9800-3b22-11eb-9b8b-38fdf1fe77bc.png)
