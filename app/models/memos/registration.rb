@@ -56,7 +56,7 @@ class Memos::Registration
   end
 
   def event
-    @event ||= client.parse_events_from(body).select { _1.class == Line::Bot::Event::Message }.first
+    @event ||= client.parse_events_from(body).select { |e| e.class == Line::Bot::Event::Message }.first
   end
 
   def text
