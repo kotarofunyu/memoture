@@ -25,7 +25,7 @@ class Memos::Registration
   before_save { throw(:abort) if invalid? }
 
   after_save do
-    message = { type: 'text', text: "メモしました\n---------------\n#{text}" }
+    message = { type: 'text', text: "メモしました\n---------------\n#{@text}" }
     client.reply_message(event['replyToken'], message)  
   end
 
