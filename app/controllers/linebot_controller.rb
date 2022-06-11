@@ -22,16 +22,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
           first_line = text.split("\n")[0]
-          if text.include?("\n") && first_line.include?('検索')
-            # search
-            message = {
-              type: 'text',
-              text: search(text.split("\n")[1])
-            }
-          else
-            # create
-            message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
-          end
+          message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
         end
       end
       client.reply_message(event['replyToken'], message)
@@ -55,13 +46,6 @@ class LinebotController < ApplicationController
       memo = Memo.create(text: text)
     end
     return memo.text
-  end
-
-  def search(query)
-    result = Memo.pluck('text').select { |text| text.include?(query) }
-    section_line = '------------------------------'
-    result.blank? ? memos = '該当するmemoがありませんでした。' : memos = result.join("\n#{section_line}\n")
-    return memos
   end
 
   def twitter_save(text)
