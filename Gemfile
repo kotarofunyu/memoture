@@ -9,6 +9,7 @@ gem 'rails', '~> 6.1.3.1'
 gem 'mysql2', '>= 0.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
+gem 'psych', '~> 3.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -18,14 +19,14 @@ gem 'puma', '~> 4.1'
 gem 'rspec-rails'
 gem 'factory_bot_rails'
 gem 'line-bot-api'
-gem 'pry-rails'
+gem 'pry-byebug'
 gem 'annotate'
 gem 'mechanize'
 gem 'twitter'
 gem 'dotenv-rails'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
+gem "net-smtp"
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
