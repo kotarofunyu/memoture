@@ -40,6 +40,7 @@ class Memos::Registration
           user_screen_name: tweet.user.screen_name
         )
         memo.save!
+        @text = tweet.text
       else
         Memo.create!(text: text)
       end
@@ -60,6 +61,6 @@ class Memos::Registration
   end
 
   def text
-    event.message['text']
+    @text = event.message['text']
   end
 end
