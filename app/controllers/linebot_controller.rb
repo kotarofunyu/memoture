@@ -28,16 +28,12 @@ class LinebotController < ApplicationController
               type: 'text',
               text: search(text.split("\n")[1])
             }
-          elsif first_line.include?('一覧')
-            # index
-            message = { type: 'text', text: index }
           else
             # create
             message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
           end
         end
       end
-      puts message
       client.reply_message(event['replyToken'], message)
     end
     head :ok
@@ -59,11 +55,6 @@ class LinebotController < ApplicationController
       memo = Memo.create(text: text)
     end
     return memo.text
-  end
-
-  def index
-    result = Memo.pluck('text')
-    return memos = result.join("\n")
   end
 
   def search(query)
