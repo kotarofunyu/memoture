@@ -10,24 +10,22 @@ class LinebotController < ApplicationController
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
-    unless client.validate_signature(body, signature)
-      error 400 do 'Bad Request' end
-    end
-    events = client.parse_events_from(body)
 
-    events.each do |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          text = event.message['text']
-          first_line = text.split("\n")[0]
-          message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
-        end
+    if client.validate_signature(body, signature)
+      events = client.parse_events_from(body)
+      event = events.select { _1.class == Line::Bot::Event::Message }.first
+      if event.type == Line::Bot::Event::MessageType::Text
+        text = event.message['text']
+        first_line = text.split("\n")[0]
+        message = { type: 'text', text: "メモしました\n---------------\n#{create(text)}" }
+        client.reply_message(event['replyToken'], message)  
+        head :ok
+      else
+        head :unprocessable_entity
       end
-      client.reply_message(event['replyToken'], message)
+    else
+      head :bad_request
     end
-    head :ok
   end
 
   private
