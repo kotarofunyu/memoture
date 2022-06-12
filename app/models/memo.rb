@@ -11,5 +11,5 @@
 class Memo < ApplicationRecord
   has_one :tweet, dependent: :destroy
   validates :text, presence: true
-  enum from: { twitter: 0 }
+  enum from: { twitter: 0, plain: 1 }, _prefix: true
 end

@@ -33,7 +33,7 @@ class Memos::Registration
     run_callbacks :save do
       if text.include?("twitter.com")
         tweet = Tweet.get_tweet_object(text)
-        memo = Memo.new(text: tweet.text)
+        memo = Memo.new(text: tweet.text, from: :twitter)
         memo.build_tweet(
           url: text,
           user_name: tweet.user.name,
@@ -42,7 +42,7 @@ class Memos::Registration
         memo.save!
         @text = tweet.text
       else
-        Memo.create!(text: text)
+        Memo.create!(text: text, from: :plain)
       end
     end
   end
